@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import saiposHandler from './api/saipos.js';
+import purchaseEmailHandler from './api/purchase-email.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Saipos — reaproveita exatamente o mesmo handler usado na Vercel.
 app.get('/api/saipos', saiposHandler);
+app.post('/api/purchase-email', purchaseEmailHandler);
 
 // Healthcheck simples para o Render.
 app.get('/health', (_req, res) => {

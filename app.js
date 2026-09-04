@@ -81,6 +81,38 @@ function statusOf(i){
   return {key:'ok',label:'OK'};
 }
 function needQty(i){ return Math.max(0,Number(i.target||i.minimum*1.5)-Number(i.current||0)); }
+function replenishmentLists(){
+  const needs=state.inventory.filter(i=>i.status!=='Inativo'&&Number(i.current||0)<Number(i.minimum||0)).sort((a,b)=>needQty(b)-needQty(a));
+  return {
+    production: needs.filter(i=>i.supplyType==='Produção'),
+    purchase: needs.filter(i=>i.supplyType!=='Produção')
+  };
+}
+function printInventory(){
+  const items=state.inventory.filter(i=>i.status!=='Inativo').sort((a,b)=>(a.category||'').localeCompare(b.category||'','pt-BR')||a.name.localeCompare(b.name,'pt-BR'));
+  const old=document.getElementById('printSheet'); if(old) old.remove();
+  const sheet=document.createElement('section'); sheet.id='printSheet';
+  const grouped={}; items.forEach(i=>{const k=i.category||'Outros';(grouped[k]??=[]).push(i)});
+  sheet.innerHTML=`<div class="print-head"><div><h1>Tex Estoque · Contagem física</h1><p>Cozinha de montagem</p></div><div><strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')}<br><strong>Responsável:</strong> ____________________</div></div>
+    ${Object.entries(grouped).map(([cat,arr])=>`<h2>${cat}</h2><table><thead><tr><th>Produto</th><th>Un.</th><th>Sistema</th><th>Contagem física</th><th>Diferença</th><th>Observação</th></tr></thead><tbody>${arr.map(i=>`<tr><td>${i.name}</td><td>${i.unit}</td><td>${Number(i.current||0).toLocaleString('pt-BR',{maximumFractionDigits:2})}</td><td></td><td></td><td></td></tr>`).join('')}</tbody></table>`).join('')}
+    <div class="print-foot">Assinatura: _________________________________________________</div>`;
+  document.body.appendChild(sheet);
+  window.print();
+  setTimeout(()=>sheet.remove(),500);
+}
+async function sendReplenishmentEmail(date, automatic=false){
+  const lists=replenishmentLists();
+  const payload={
+    date,
+    automatic,
+    purchase:lists.purchase.map(i=>({code:i.code,name:i.name,unit:i.unit,current:Number(i.current||0),minimum:Number(i.minimum||0),target:Number(i.target||0),needed:needQty(i)})),
+    production:lists.production.map(i=>({code:i.code,name:i.name,unit:i.unit,current:Number(i.current||0),minimum:Number(i.minimum||0),target:Number(i.target||0),needed:needQty(i)}))
+  };
+  const r=await fetch('/api/purchase-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(data.error||'Não foi possível enviar o e-mail.');
+  return data;
+}
 function percent(i){ const t=Number(i.target||i.minimum*1.5)||1; return Math.max(0,Math.min(100,(Number(i.current||0)/t)*100)); }
 function stats(){
   const active=state.inventory.filter(i=>i.status!=='Inativo');
@@ -136,13 +168,14 @@ function renderStock(){
   if(state.search) arr=arr.filter(i=>normalize(i.name).includes(normalize(state.search))||normalize(i.code).includes(normalize(state.search)));
   if(state.filter!=='Todos') arr=arr.filter(i=>statusOf(i).label===state.filter);
   $('#content').innerHTML=`
-    <div class="toolbar"><input id="stockSearch" placeholder="Buscar produto..." value="${state.search}"><select id="stockFilter"><option>Todos</option><option>ZERADO</option><option>CRÍTICO</option><option>BAIXO</option><option>OK</option></select></div>
+    <div class="toolbar"><input id="stockSearch" placeholder="Buscar produto..." value="${state.search}"><select id="stockFilter"><option>Todos</option><option>ZERADO</option><option>CRÍTICO</option><option>BAIXO</option><option>OK</option></select><button id="printStock" class="secondary">🖨 Imprimir estoque</button></div>
     <div class="table-wrap"><table><thead><tr><th>Código</th><th>Produto</th><th>Tipo</th><th class="num">Atual</th><th class="num">Mínimo semanal</th><th class="num">Alvo</th><th>Status</th><th></th></tr></thead><tbody>
     ${arr.map(i=>{const st=statusOf(i);return `<tr><td><span class="code">${i.code}</span></td><td><strong>${i.name}</strong><div class="muted">${i.category}</div></td><td><span class="tag">${i.supplyType||'Compra'}</span></td><td class="num">${fmtQty(i.current,i.unit)}</td><td class="num">${fmtQty(i.minimum,i.unit)}</td><td class="num">${fmtQty(i.target,i.unit)}</td><td><span class="pill ${st.key}">${st.label}</span></td><td><button class="secondary mini-entry" data-code="${i.code}">Lançar</button></td></tr>`}).join('')}
     </tbody></table></div>`;
   $('#stockFilter').value=state.filter;
   $('#stockSearch').addEventListener('input',e=>{state.search=e.target.value;renderStock()});
   $('#stockFilter').addEventListener('change',e=>{state.filter=e.target.value;renderStock()});
+  $('#printStock').addEventListener('click',printInventory);
   document.querySelectorAll('.mini-entry').forEach(b=>b.addEventListener('click',()=>openEntryModal(b.dataset.code)));
 }
 function entryForm(code=''){
@@ -177,10 +210,15 @@ function bindEntryForm(modal=false){
   });
 }
 function renderReplenishment(){
-  const needs=state.inventory.filter(i=>i.status!=='Inativo'&&Number(i.current||0)<Number(i.minimum||0)).sort((a,b)=>needQty(b)-needQty(a));
-  const prod=needs.filter(i=>i.supplyType==='Produção'), buy=needs.filter(i=>i.supplyType!=='Produção');
+  const lists=replenishmentLists(), prod=lists.production, buy=lists.purchase;
   const section=(title,arr)=>`<div class="card"><div class="section-title"><h2>${title}</h2><span class="pill ${arr.length?'bad':'ok'}">${arr.length} itens</span></div><div class="big-list">${arr.length?arr.map(i=>`<div class="need"><div><strong>${i.name}</strong><div class="muted">${fmtQty(i.current,i.unit)} em estoque</div></div><div><span class="muted">Mínimo</span><br><strong>${fmtQty(i.minimum,i.unit)}</strong></div><div><span class="muted">Alvo</span><br><strong>${fmtQty(i.target,i.unit)}</strong></div><div><span class="muted">Repor</span><br><strong>${fmtQty(needQty(i),i.unit)}</strong></div></div>`).join(''):'<div class="empty">Nada para repor.</div>'}</div></div>`;
-  $('#content').innerHTML=`<div class="two">${section('Lista de produção',prod)}${section('Lista de compras',buy)}</div>`;
+  $('#content').innerHTML=`<div class="toolbar"><button id="emailList" class="secondary">✉ Enviar lista por e-mail agora</button><span class="muted">No fechamento Saipos, o envio é automático se o e-mail estiver configurado no Render.</span></div><div class="two">${section('Lista de produção',prod)}${section('Lista de compras',buy)}</div>`;
+  $('#emailList').addEventListener('click',async()=>{
+    const b=$('#emailList'); b.disabled=true; b.textContent='Enviando…';
+    try{await sendReplenishmentEmail(new Date().toISOString().slice(0,10),false);toast('Lista enviada por e-mail.');}
+    catch(err){toast(err.message);}
+    finally{b.disabled=false;b.textContent='✉ Enviar lista por e-mail agora';}
+  });
 }
 function renderMovements(){
   $('#content').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Data</th><th>Produto</th><th>Tipo</th><th class="num">Movimento</th><th class="num">Antes</th><th class="num">Depois</th><th>Obs.</th></tr></thead><tbody>
@@ -238,8 +276,14 @@ async function runSync(dryRun){
       }
       state.syncs.unshift({date,applied:true,createdAt:nowISO(),salesCount:sales.length}); saveLocal();
       toast('Baixa da Saipos aplicada.');
+      try{
+        const emailResult=await sendReplenishmentEmail(date,true);
+        box.insertAdjacentHTML('beforeend',`<div class="callout"><strong>Fechamento concluído:</strong> lista de compras/produção enviada automaticamente para ${emailResult.to||'o e-mail configurado'}.</div>`);
+      }catch(emailErr){
+        box.insertAdjacentHTML('beforeend',`<div class="callout warn"><strong>Estoque baixado normalmente.</strong> O e-mail automático não foi enviado: ${emailErr.message}</div>`);
+      }
     }
-  }catch(err){ box.innerHTML=`<div class="callout warn"><strong>Não foi possível sincronizar:</strong> ${err.message}. Confira o token SAIPOS_API_TOKEN na Vercel.</div>`; }
+  }catch(err){ box.innerHTML=`<div class="callout warn"><strong>Não foi possível sincronizar:</strong> ${err.message}. Confira o token SAIPOS_API_TOKEN no Render.</div>`; }
 }
 function renderConfig(){
   $('#content').innerHTML=`<div class="two">
@@ -255,8 +299,9 @@ function renderConfig(){
     </div>
     <div class="card"><div class="section-title"><h2>Infraestrutura</h2></div>
       <div class="stock-row"><strong>Firebase</strong><div class="muted">Cole seu firebaseConfig em <span class="code">firebase-config.js</span>. Sem isso, a V1 funciona apenas neste navegador.</div></div>
-      <div class="stock-row"><strong>Saipos</strong><div class="muted">Na Vercel, crie a variável <span class="code">SAIPOS_API_TOKEN</span>. Opcional: <span class="code">SAIPOS_AUTH_MODE</span> = raw ou bearer.</div></div>
-      <div class="stock-row"><strong>Fechamento automático</strong><div class="muted">A V1 traz sincronização manual segura. O cron automático pode ser ativado depois que confirmarmos o formato real retornado pela sua API em produção.</div></div>
+      <div class="stock-row"><strong>Saipos</strong><div class="muted">No Render, crie a variável <span class="code">SAIPOS_API_TOKEN</span>. Opcional: <span class="code">SAIPOS_AUTH_MODE</span> = raw ou bearer.</div></div>
+      <div class="stock-row"><strong>E-mail de fechamento</strong><div class="muted">Configure no Render <span class="code">RESEND_API_KEY</span>, <span class="code">PURCHASE_EMAIL</span> e opcionalmente <span class="code">FROM_EMAIL</span>. Após uma sincronização Saipos aplicada, a lista é enviada automaticamente.</div></div>
+      <div class="stock-row"><strong>Fechamento automático</strong><div class="muted">Nesta V1.1 o e-mail é automático após a sincronização real do dia. O agendamento 100% sem intervenção pode ser ativado depois com um Cron Job no Render.</div></div>
     </div></div>`;
   const sel=$('#cfgItem');
   const load=()=>{const i=state.inventory.find(x=>x.code===sel.value);$('#cfgMin').value=i.minimum;$('#cfgTarget').value=i.target;$('#cfgType').value=i.supplyType||'Compra';$('#cfgStatus').value=i.status||'Ativo'};
