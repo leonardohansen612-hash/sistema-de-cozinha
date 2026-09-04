@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tex Estoque — Cozinha</title>
+  <meta name="theme-color" content="#171717">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div id="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">T</div><div><strong>Tex Estoque</strong><span>Cozinha de montagem</span></div></div>
+    <nav id="nav">
+      <button class="nav active" data-view="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav" data-view="estoque">▤ <span>Estoque</span></button>
+      <button class="nav" data-view="entrada">＋ <span>Entrada / Ajuste</span></button>
+      <button class="nav" data-view="reposicao">☑ <span>Reposição</span></button>
+      <button class="nav" data-view="movimentos">↕ <span>Movimentações</span></button>
+      <button class="nav" data-view="saipos">↻ <span>Saipos</span></button>
+      <button class="nav" data-view="config">⚙ <span>Configuração</span></button>
+    </nav>
+    <div class="mode" id="storageMode">Modo local</div>
+  </aside>
+  <main>
+    <header class="topbar">
+      <div><h1 id="viewTitle">Dashboard</h1><p id="viewSubtitle">Visão geral do estoque da cozinha</p></div>
+      <div class="top-actions"><button id="quickEntry" class="primary">+ Entrada</button></div>
+    </header>
+    <section id="content"></section>
+  </main>
+</div>
+<div id="modal" class="modal hidden" aria-hidden="true"><div class="modal-card"><button id="closeModal" class="close">×</button><div id="modalContent"></div></div></div>
+<div id="toast" class="toast"></div>
+<script src="/firebase-config.js"></script>
+<script src="/data.js"></script>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
