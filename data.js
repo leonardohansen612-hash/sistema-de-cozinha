@@ -735,23 +735,40 @@ window.TEX_DATA = {
       "ingredients": [
         {
           "ingredient": "Azeitona Preta",
-          "qty": 150
+          "qty": 100
+        },
+        {
+          "ingredient": "Provolone",
+          "qty": 100
+        },
+        {
+          "ingredient": "Parmesão",
+          "qty": 100
+        },
+        {
+          "ingredient": "Salame",
+          "qty": 100
+        },
+        {
+          "ingredient": "Presunto Cru",
+          "qty": 70
+        },
+        {
+          "ingredient": "Sardela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Crostini",
+          "qty": 0.5
         }
       ],
-      "incomplete": [
-        "Provolone",
-        "Parmesão",
-        "Salame",
-        "Presunto Cru",
-        "Sardela",
-        "Crostini"
-      ]
+      "incomplete": []
     },
     "Batatinhas": {
       "ingredients": [
         {
           "ingredient": "Batata",
-          "qty": 150
+          "qty": 200
         }
       ],
       "incomplete": []
@@ -774,24 +791,38 @@ window.TEX_DATA = {
       "incomplete": []
     },
     "Aperitex": {
-      "ingredients": [],
-      "incomplete": [
-        "Azeitona Preta",
-        "Provolone",
-        "Salame"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Azeitona Preta",
+          "qty": 70
+        },
+        {
+          "ingredient": "Provolone",
+          "qty": 100
+        },
+        {
+          "ingredient": "Salame",
+          "qty": 100
+        }
+      ],
+      "incomplete": []
     },
     "Pizza Mussarela": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
         }
       ],
-      "incomplete": [
-        "Mussarela",
-        "Molho de tomate"
-      ]
+      "incomplete": []
     },
     "Torresmo": {
       "ingredients": [
@@ -803,60 +834,134 @@ window.TEX_DATA = {
       "incomplete": []
     },
     "O Croc": {
-      "ingredients": [],
-      "incomplete": [
-        "Queijo Coalho",
-        "Bacon",
-        "Molho Sweet Thai"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Queijo Coalho",
+          "qty": 200
+        },
+        {
+          "ingredient": "Bacon",
+          "qty": 100
+        },
+        {
+          "ingredient": "Molho Sweet Thai",
+          "qty": 30
+        }
+      ],
+      "incomplete": []
     },
     "Brusqueta Caprese": {
-      "ingredients": [],
-      "incomplete": [
-        "Torrada",
-        "Mussarela bolinha",
-        "Tomare Confit",
-        "Pesto"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Torrada",
+          "qty": 0.3333333333333333
+        },
+        {
+          "ingredient": "Cereja de búfala",
+          "qty": 60
+        },
+        {
+          "ingredient": "Tomate Confit",
+          "qty": 60
+        },
+        {
+          "ingredient": "Pesto",
+          "qty": 30
+        }
+      ],
+      "incomplete": []
     },
     "Brusqueta Pullo di Porko": {
-      "ingredients": [],
-      "incomplete": [
-        "Torrada",
-        "Pulled Pork",
-        "American Cheese",
-        "Picles de cebola",
-        "Picles de pepino"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Torrada",
+          "qty": 0.3333333333333333
+        },
+        {
+          "ingredient": "Pulled Pork",
+          "qty": 150
+        },
+        {
+          "ingredient": "American Cheese",
+          "qty": 50
+        },
+        {
+          "ingredient": "Picles de cebola",
+          "qty": 15
+        },
+        {
+          "ingredient": "Picles de pepino",
+          "qty": 15
+        }
+      ],
+      "incomplete": []
     },
     "Tex Salad Chicken": {
-      "ingredients": [],
-      "incomplete": [
-        "Mix de folha",
-        "Tomate Cereja",
-        "Frango Empanado",
-        "Picles de cebola",
-        "Picles de pepino",
-        "Maionese",
-        "opção vegetariana sem frango"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Mix de folha",
+          "qty": 100
+        },
+        {
+          "ingredient": "Tomate Cereja",
+          "qty": 60
+        },
+        {
+          "ingredient": "Frango Empanado",
+          "qty": 150
+        },
+        {
+          "ingredient": "Picles de cebola",
+          "qty": 15
+        },
+        {
+          "ingredient": "Picles de pepino",
+          "qty": 15
+        },
+        {
+          "ingredient": "Maionese",
+          "qty": 30
+        }
+      ],
+      "incomplete": []
     },
     "Mac & Cheese": {
-      "ingredients": [],
-      "incomplete": [
-        "Macarrão caracolino",
-        "American Cheese",
-        "Farofa de bacon"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Macarrão caracolino",
+          "qty": 150
+        },
+        {
+          "ingredient": "American Cheese",
+          "qty": 150
+        },
+        {
+          "ingredient": "Farofa de bacon",
+          "qty": 10
+        }
+      ],
+      "incomplete": []
     },
     "Burrata": {
-      "ingredients": [],
-      "incomplete": [
-        "Burrata",
-        "Pesto",
-        "Tomate seco",
-        "Torradas"
-      ]
+      "ingredients": [
+        {
+          "ingredient": "Burrata",
+          "qty": 1
+        },
+        {
+          "ingredient": "Pesto",
+          "qty": 50
+        },
+        {
+          "ingredient": "Tomate seco",
+          "qty": 100
+        },
+        {
+          "ingredient": "Torrada",
+          "qty": 0.5
+        }
+      ],
+      "incomplete": []
     },
     "Isca de Frango": {
       "ingredients": [
@@ -960,11 +1065,11 @@ window.TEX_DATA = {
       "ingredients": [
         {
           "ingredient": "Picanha",
-          "qty": 300
+          "qty": 200
         },
         {
-          "ingredient": "Pão Italiano",
-          "qty": 100
+          "ingredient": "Torrada",
+          "qty": 0.5
         },
         {
           "ingredient": "Chimichurri",
@@ -977,7 +1082,7 @@ window.TEX_DATA = {
       "ingredients": [
         {
           "ingredient": "Linguiça",
-          "qty": 250
+          "qty": 200
         },
         {
           "ingredient": "Molho Sweet Thai",
@@ -994,11 +1099,11 @@ window.TEX_DATA = {
         },
         {
           "ingredient": "Brisket",
-          "qty": 150
+          "qty": 200
         },
         {
           "ingredient": "Sobrecoxa de frango",
-          "qty": 150
+          "qty": 200
         },
         {
           "ingredient": "Costelinha Suina",
@@ -1014,7 +1119,7 @@ window.TEX_DATA = {
         },
         {
           "ingredient": "Coleslaw",
-          "qty": 150
+          "qty": 100
         }
       ],
       "incomplete": []
@@ -1024,182 +1129,187 @@ window.TEX_DATA = {
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Tomate seco",
+          "qty": 50
+        },
+        {
+          "ingredient": "Parmesão",
+          "qty": 15
+        },
+        {
+          "ingredient": "Manjericão",
+          "qty": 5
+        },
+        {
+          "ingredient": "Orégano",
+          "qty": 5
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Pizza Corn Bacon": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Bacon",
+          "qty": 50
+        },
+        {
+          "ingredient": "Milho",
+          "qty": 50
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Pizza Caprese": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Cereja de búfala",
+          "qty": 50
+        },
+        {
+          "ingredient": "Pesto",
+          "qty": 50
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Pizza Pepperoni": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Pepperoni",
+          "qty": 100
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Pizza Presuntex": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Cereja de búfala",
+          "qty": 50
+        },
+        {
+          "ingredient": "Presunto Cru",
+          "qty": 100
+        },
+        {
+          "ingredient": "Rúcula",
+          "qty": 30
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Pizza Caipira": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Bacon",
+          "qty": 50
+        },
+        {
+          "ingredient": "Milho",
+          "qty": 50
+        },
+        {
+          "ingredient": "Frango desfiado",
+          "qty": 150
+        },
+        {
+          "ingredient": "Catupiry",
+          "qty": 100
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Pizza Calabresa": {
       "ingredients": [
         {
           "ingredient": "Massa",
           "qty": 1
+        },
+        {
+          "ingredient": "Molho de tomate",
+          "qty": 50
+        },
+        {
+          "ingredient": "Mussarela",
+          "qty": 100
+        },
+        {
+          "ingredient": "Calabresa",
+          "qty": 150
         }
       ],
-      "incomplete": [
-        "Molho de tomate",
-        "Mussarela",
-        "Tomate seco",
-        "Parmesão",
-        "Manjericão",
-        "Orégano",
-        "Bacon",
-        "Milho",
-        "Cereja de búfala",
-        "Pesto",
-        "Pepperoni",
-        "Presunto Cru",
-        "Rúcula",
-        "Frango desfiado",
-        "Catupiry",
-        "Calabresa"
-      ]
+      "incomplete": []
     },
     "Tex Dog": {
       "ingredients": [
